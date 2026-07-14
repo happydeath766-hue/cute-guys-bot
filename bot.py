@@ -1,10 +1,13 @@
 import os
 import json
 import asyncio
+import logging
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo, LabeledPrice
 from aiogram import F
+
+logging.basicConfig(level=logging.INFO)
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 CRYPTOBOT_TOKEN = os.getenv("CRYPTOBOT_TOKEN")
@@ -43,38 +46,45 @@ async def start(message: types.Message):
         reply_markup=keyboard, parse_mode="Markdown"
     )
 
-@dp.message(F.web_app_data)
+@dp.message(F.content_type == "web_app_data") # ESTA ERA LA FALLA CLAVE
 async def webapp_data(message: types.Message):
-    data = json.loads(message.web_app_data.data)
-    plan_id = data["plan_id"]
-    dias = int(data["dias"])
-    total_usd = int(data["total_usd"])
-    total_stars = int(data["total_stars"])
-    descuento = int(data["descuento"])
-    metodo = data["metodo"]
+    try:
+        data = json.loads(message.web_app_data.data)
+        logging.info(f"Datos recibidos: {data}")
 
-    plan = VIP[plan_id]
-    dur_text = "♾️ Permanente" if dias==9999 else f"{dias} días"
-    desc_text = f"\n**Descuento:** -{descuento}%" if descuento>0 else ""
+        plan_id = data["plan_id"]
+        dias = int(data["dias"])
+        total_usd = int(data["total_usd"])
+        total_stars = int(data["total_stars"])
+        descuento = int(data["descuento"])
+        metodo = data["metodo"]
 
-    if metodo == "Stars":
-        await bot.send_invoice(
-            chat_id=message.from_user.id, title=f"{plan['nombre']} - {dur_text}",
-            description=f"Acceso VIP {dur_text}. Entrega inmediata ⚡",
-            payload=f"vip_{plan_id}_{dias}_{message.from_user.id}", provider_token="", currency="XTR",
-            prices=[LabeledPrice(label=f"{plan['nombre']} {dur_text}", amount=total_stars)]
-        )
-    elif metodo == "CryptoBot":
-        invoice = await bot.create_invoice_link(
-            title=f"{plan['nombre']} - {dur_text}", description=f"Acceso VIP {dur_text}. Entrega inmediata ⚡",
-            payload=f"vip_{plan_id}_{dias}_{message.from_user.id}", provider_token=CRYPTOBOT_TOKEN, currency="USDT",
-            prices=[LabeledPrice(label=f"{plan['nombre']} {dur_text}", amount=total_usd*100)]
-        )
-        await message.answer(f"✅ *PEDIDO RECIBIDO*\n\n**Plan:** {plan['nombre']}\n**Duración:** {dur_text}{desc_text}\n**Total:** ${total_usd} USD\n\nPaga aquí: {invoice}", parse_mode="Markdown")
-    elif metodo == "Paypal":
-        await message.answer(f"✅ *PEDIDO RECIBIDO*\n\n**Plan:** {plan['nombre']}\n**Duración:** {dur_text}{desc_text}\n**Total:** ${total_usd} USD\n💰 *Paga por Paypal a:* {PAYPAL_USER}\nLink: {PAYPAL_LINK}\n\nMándame el comprobante aquí para activar ⚡")
-    elif metodo == "Stripe":
-        await message.answer(f"✅ *PEDIDO RECIBIDO*\n\n**Plan:** {plan['nombre']}\n**Duración:** {dur_text}{desc_text}\n**Total:** ${total_usd} USD\n💳 *Paga con tarjeta:* Toca CryptoBot > Pagar con Tarjeta. Stripe procesa y recibo USDT.")
+        plan = VIP[plan_id]
+        dur_text = "♾️ Permanente" if dias==9999 else f"{dias} días"
+        desc_text = f"\n**Descuento:** -{descuento}%" if descuento>0 else ""
+
+        if metodo == "Stars":
+            await bot.send_invoice(
+                chat_id=message.from_user.id, title=f"{plan['nombre']} - {dur_text}",
+                description=f"Acceso VIP {dur_text}. Entrega inmediata ⚡",
+                payload=f"vip_{plan_id}_{dias}_{message.from_user.id}", provider_token="", currency="XTR",
+                prices=[LabeledPrice(label=f"{plan['nombre']} {dur_text}", amount=total_stars)]
+            )
+        elif metodo == "CryptoBot":
+            invoice = await bot.create_invoice_link(
+                title=f"{plan['nombre']} - {dur_text}", description=f"Acceso VIP {dur_text}. Entrega inmediata ⚡",
+                payload=f"vip_{plan_id}_{dias}_{message.from_user.id}", provider_token=CRYPTOBOT_TOKEN, currency="USDT",
+                prices=[LabeledPrice(label=f"{plan['nombre']} {dur_text}", amount=total_usd*100)]
+            )
+            await message.answer(f"✅ *PEDIDO RECIBIDO*\n\n**Plan:** {plan['nombre']}\n**Duración:** {dur_text}{desc_text}\n**Total:** ${total_usd} USD\nPaga aquí: {invoice}", parse_mode="Markdown")
+        elif metodo == "Paypal":
+            await message.answer(f"✅ *PEDIDO RECIBIDO*\n\n**Plan:** {plan['nombre']}\n**Duración:** {dur_text}{desc_text}\n**Total:** ${total_usd} USD\n💰 *Paga por Paypal a:* {PAYPAL_USER}\nLink: {PAYPAL_LINK}\n\nMándame el comprobante aquí para activar ⚡")
+        elif metodo == "Stripe":
+            await message.answer(f"✅ *PEDIDO RECIBIDO*\n\n**Plan:** {plan['nombre']}\n**Duración:** {dur_text}{desc_text}\n**Total:** ${total_usd} USD\n💳 *Paga con tarjeta:* Toca CryptoBot > Pagar con Tarjeta. Stripe procesa y recibo USDT.")
+
+    except Exception as e:
+        logging.error(f"Error: {e}")
+        await message.answer("❌ Hubo un error procesando tu pago. Habla con soporte.")
 
 async def main():
     print("Bot iniciado...")
