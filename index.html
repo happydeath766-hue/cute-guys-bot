@@ -249,18 +249,26 @@ function girarRuleta() {
 }
 
 function pagar(metodo) {
-    let v = VIP[vipSel];
-    let t = calcularTotal();
+  let v = personaVIP();
+  let t = calcularTotal();
 
-    const data = {
-        plan_id: vipSel,
-        dias: durSel.dias,
-        total_usd: t.totalUsd,
-        total_stars: t.totalStars,
-        descuento: descuento,
-        metodo: metodo
-    };
+  const datos = {
+    plan_id: v.plan,
+    duracion_dias: v.dias,
+    total_usd: t.totalUSD,
+    estrellas_totales: t.total_estrellas,
+    descuento: t.descuento,
+    metodo: metodo
+  };
 
+  console.log("Enviando...", datos); // para depuracion
+
+  tg.sendData(JSON.stringify(datos)); // <-- ESTA ES LA LINEA CORRECTA
+
+  setTimeout(() => {
+    tg.close(); // cierra la web 200ms despues
+  }, 200);
+}
     console.log("Enviando:", data); // para debug
 
     
