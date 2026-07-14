@@ -3,99 +3,74 @@ import json
 import asyncio
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo, LabeledPrice
 from aiogram import F
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 CRYPTOBOT_TOKEN = os.getenv("CRYPTOBOT_TOKEN")
+PAYPAL_LINK = "https://www.paypal.me/Worldtwinks" # CAMBIA ESTO
+PAYPAL_USER = "@Worldtwinks" # CAMBIA ESTO
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
 
-# TUS PLANES 2X2 + SUSCRIPCIONES
 PAQUETES = {
-    "1mes": {"nombre": "1 Mes VIP", "precio_usd": 5, "precio_stars": 500, "dias": 30},
-    "2meses": {"nombre": "2 Meses VIP", "precio_usd": 9, "precio_stars": 900, "dias": 60},
-    "3meses": {"nombre": "3 Meses VIP", "precio_usd": 12, "precio_stars": 1200, "dias": 90},
-    "6meses": {"nombre": "6 Meses VIP", "precio_usd": 20, "precio_stars": 2000, "dias": 180},
-    "anual": {"nombre": "Anual VIP", "precio_usd": 35, "precio_stars": 3500, "dias": 365},
-    "perma": {"nombre": "Permanente VIP", "precio_usd": 60, "precio_stars": 6000, "dias": 9999}
+"prohibido": {"nombre": "Prohibido", "usd": 15, "stars": 800, "dias": 30},
+"twinks": {"nombre": "Twinks", "usd": 15, "stars": 800, "dias": 30},
+"adultos": {"nombre": "Adultos", "usd": 10, "stars": 500, "dias": 30},
+"personalizado": {"nombre": "Personalizado", "usd": 70, "stars": 3500, "dias": 30},
+"twinks_prohibido": {"nombre": "Twinks + Prohibido", "usd": 27, "stars": 1600, "dias": 30},
+"twinks_adultos": {"nombre": "Twinks + Adultos", "usd": 17, "stars": 1100, "dias": 30},
+"prohibido_adultos": {"nombre": "Prohibido + Adultos", "usd": 15, "stars": 1100, "dias": 30},
+"personalizado_otro": {"nombre": "Personalizado + Otro", "usd": 80, "stars": 3800, "dias": 30},
+"todos": {"nombre": "Todos 🔥", "usd": 100, "stars": 4800, "dias": 30},
+"twinks_anual": {"nombre": "Twinks Anual", "usd": 30, "stars": 3000, "dias": 365},
+"twinks_perma": {"nombre": "Twinks Permanente", "usd": 60, "stars": 6000, "dias": 9999},
+"prohibido_anual": {"nombre": "Prohibido Anual", "usd": 40, "stars": 4000, "dias": 365},
+"prohibido_perma": {"nombre": "Prohibido Permanente", "usd": 80, "stars": 8000, "dias": 9999},
+"adultos_anual": {"nombre": "Adultos Anual", "usd": 15, "stars": 1500, "dias": 365},
+"adultos_perma": {"nombre": "Adultos Permanente", "usd": 30, "stars": 3000, "dias": 9999}
 }
-
-# LINKS DE TUS 2 GRUPOS GRATIS - CAMBIALOS
-GRUPO1 = "https://t.me/+TU_LINK_GRUPO1"
-GRUPO2 = "https://t.me/+TU_LINK_GRUPO2"
 
 @dp.message(Command("start"))
 async def start(message: types.Message):
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text="🛒 ABRIR TIENDA VIP 👑", web_app=WebAppInfo(url="https://cute-guys-bot.vercel.app"))]
     ])
-    await message.answer(
-        "✨ *BIENVENIDO A CUTE GUYS VIP* ✨\n\n"
-        "Elige tu acceso VIP aquí abajo. Incluye 2 grupos gratis 👇",
-        reply_markup=keyboard, 
-        parse_mode="Markdown"
-    )
+    await message.answer("✨ *BIENVENIDO A CUTE GUYS VIP* ✨\n\nElige tu acceso VIP aquí abajo:", reply_markup=keyboard, parse_mode="Markdown")
 
 @dp.message(F.web_app_data)
 async def webapp_data(message: types.Message):
-    try:
-        data = json.loads(message.web_app_data.data)
-        paquete_id = data.get("plan_id")
-        metodo = data.get("metodo")
+    data = json.loads(message.web_app_data.data)
+    plan_id = data.get("plan_id")
+    metodo = data.get("metodo")
+    
+    if plan_id not in PAQUETES:
+        await message.answer("❌ Plan no válido")
+        return
         
-        if paquete_id not in PAQUETES:
-            await message.answer("❌ Plan no válido")
-            return
-            
-        paquete = PAQUETES[paquete_id]
-        
-        # Si paga con Stars
-        if metodo == "Stars":
-            await bot.send_invoice(
-                chat_id=message.from_user.id,
-                title=paquete["nombre"],
-                description=f"Acceso VIP por {paquete['dias']} días",
-                payload=f"vip_stars_{paquete_id}_{message.from_user.id}",
-                provider_token="",
-                currency="XTR",
-                prices=[types.LabeledPrice(label=paquete["nombre"], amount=paquete["precio_stars"])]
-            )
-        # Si paga con CryptoBot
-        elif metodo == "CryptoBot":
-            invoice = await bot.create_invoice_link(
-                title=paquete["nombre"],
-                description=f"Acceso VIP por {paquete['dias']} días",
-                payload=f"vip_crypto_{paquete_id}_{message.from_user.id}",
-                provider_token=CRYPTOBOT_TOKEN,
-                currency="USDT",
-                prices=[types.LabeledPrice(label=paquete["nombre"], amount=paquete["precio_usd"]*100)]
-            )
-            await message.answer(
-                f"✅ *PEDIDO RECIBIDO*\n\n"
-                f"**Plan:** {paquete['nombre']}\n"
-                f"**Precio:** ${paquete['precio_usd']} USD\n"
-                f"**Método:** {metodo}\n\n"
-                f"Paga aquí: {invoice}", 
-                parse_mode="Markdown"
-            )
-        else:
-            # Para Paypal y Stripe
-            await message.answer(
-                f"✅ *PEDIDO RECIBIDO*\n\n"
-                f"**Plan:** {paquete['nombre']}\n"
-                f"**Precio:** ${paquete['precio_usd']} USD\n"
-                f"**Método:** {metodo}\n\n"
-                f"Ahora te envío los datos para pagar por {metodo} al privado."
-            )
-            
-    except Exception as e:
-        await message.answer(f"Error: {e}")
+    plan = PAQUETES[plan_id]
+    
+    if metodo == "Stars":
+        await bot.send_invoice(
+            chat_id=message.from_user.id, title=plan["nombre"], description=f"Acceso VIP {plan['dias']} días",
+            payload=f"vip_{plan_id}_{message.from_user.id}", provider_token="", currency="XTR",
+            prices=[LabeledPrice(label=plan["nombre"], amount=plan["stars"])]
+        )
+    elif metodo == "CryptoBot":
+        invoice = await bot.create_invoice_link(
+            title=plan["nombre"], description=f"Acceso VIP {plan['dias']} días",
+            payload=f"vip_{plan_id}_{message.from_user.id}", provider_token=CRYPTOBOT_TOKEN, currency="USDT",
+            prices=[LabeledPrice(label=plan["nombre"], amount=plan["usd"]*100)]
+        )
+        await message.answer(f"✅ *PEDIDO: {plan['nombre']}*\n**${plan['usd']} USD**\n\nPaga aquí: {invoice}", parse_mode="Markdown")
+    elif metodo == "Paypal":
+        await message.answer(f"✅ *PEDIDO: {plan['nombre']}*\n**${plan['usd']} USD**\n\n💰 Paga por Paypal a: {PAYPAL_USER}\nLink: {PAYPAL_LINK}\n\nMándame el comprobante aquí.")
+    elif metodo == "Stripe":
+        await message.answer(f"✅ *PEDIDO: {plan['nombre']}*\n**${plan['usd']} USD**\n\n💳 Para pagar con tarjeta usa CryptoBot > Pagar con Stripe.\nStripe procesa y CryptoBot me paga en USDT.")
 
 async def main():
-    print("Bot iniciado en Railway...")
+    print("Bot iniciado...")
     await dp.start_polling(bot)
-
 if __name__ == "__main__":
     asyncio.run(main())
