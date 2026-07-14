@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; }
-body { background: linear-gradient(135deg, #0a0a0a 0%, #1a1200 50%, #0a0a0a 100%); color: #fff; font-family: 'Montserrat', Arial; margin: 0; padding: 20px; line-height: 1.6; }
+body { background: linear-gradient(135deg, #0a0a0a 0%, #1a1200 50%, #0a0a0a 100%); color: #fff; font-family: 'Montserrat', Arial; margin: 0; padding: 20px; }
 .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
 .title { font-size: 28px; font-weight: 800; background: linear-gradient(90deg, #FFD700, #FFF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .lang-btn { background: #000; border: 2px solid #FFD700; border-radius: 50%; width: 45px; height: 45px; font-size: 26px; cursor: pointer; }
@@ -25,26 +25,24 @@ body { background: linear-gradient(135deg, #0a0a0a 0%, #1a1200 50%, #0a0a0a 100%
 .dur-btn { flex: 1; background: #000; border: 2px solid #333; color: #FFF; padding: 14px; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 14px; }
 .dur-btn.selected { border-color: #FFD700; background: #1a1200; color: #FFD700; }
 .pay-main { width: 100%; padding: 16px; margin: 15px 0; border: 2px solid #FFD700; border-radius: 14px; font-size: 17px; font-weight: 800; cursor: pointer; background: linear-gradient(90deg, #FFD700, #FFF); color: #000; }
-.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 100; animation: fadeIn 0.4s; }
-@keyframes fadeIn { from{opacity:0} to{opacity:1} }
-.modal-content { background: #000; border: 2px solid #FFD700; border-radius: 18px; padding: 22px; margin: 8% 15px; max-height: 85vh; overflow-y: auto; }
-.back-btn { background: none; border: none; color: #FFD700; font-size: 26px; cursor: pointer; margin-bottom: 10px; }
+.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 100; }
+.modal-content { background: #000; border: 2px solid #FFD700; border-radius: 18px; padding: 22px; margin: 8% 15px; }
+.back-btn { background: none; border: none; color: #FFD700; font-size: 26px; cursor: pointer; }
 .resumen { background: #1a1200; border: 1px solid #FFD700; border-radius: 12px; padding: 16px; margin: 18px 0; font-size: 14px; }
-.ruleta { width: 200px; height: 200px; border: 4px solid #FFD700; border-radius: 50%; margin: 20px auto; position: relative; transition: transform 3s cubic-bezier(0.17, 0.67, 0.12, 1); }
-.ruleta-btn { width: 100%; padding: 14px; background: #FFD700; color: #000; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; margin: 15px 0; }
-.lang-menu { display: none; }
+.ruleta { width: 180px; height: 180px; border: 4px solid #FFD700; border-radius: 50%; margin: 20px auto; transition: transform 3s; }
+.ruleta-btn { width: 100%; padding: 14px; background: #FFD700; color: #000; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; }
 </style>
 </head>
 <body>
 <div class="header">
 <div class="title">CUTE GUYS VIP 👑</div>
-<button class="lang-btn" onclick="mostrarIdiomas()">🇪🇸</button>
+<button class="lang-btn" onclick="cambiarIdioma()">🇪🇸</button>
 </div>
 
 <div class="free-groups">
 <b>🎁 GRUPOS GRATIS</b>
 <a href="https://t.me/+Z2EbBhJGY8UwYjlh" target="_blank">𝘾𝙪𝙩𝙚 𝙂𝙪𝙮𝙨 🔥</a>
-<a href="https://t.me/+CET3NNTylb8xOTYx" target="_blank">𝘾𝙪𝙩𝙚 𝙂𝙪𝙮𝙨 𝘾𝙝𝙖𝙣𝙚𝙡🔥</a>
+<a href="https://t.me/+CET3NNTylb8xOTYx" target="_blank">𝘾𝙪𝙩𝙚 𝙂𝙪𝙮𝙨 𝘾𝙝𝙖𝙣𝙣𝙚𝙡🔥</a>
 </div>
 
 <div class="section-title">📦 ELIGE TU VIP</div>
@@ -52,29 +50,27 @@ body { background: linear-gradient(135deg, #0a0a0a 0%, #1a1200 50%, #0a0a0a 100%
 
 <div class="section-title">⏰ ELIGE DURACIÓN</div>
 <div class="duracion">
-<button class="dur-btn" data-dias="30" data-extra="30">1 Mes +$30</button>
-<button class="dur-btn" data-dias="365" data-extra="50">1 Año +$50</button>
-<button class="dur-btn" data-dias="9999" data-extra="100">♾️ Permanente +$100</button>
+<button class="dur-btn" data-dias="30" data-extra="30">1 Mes<br>+$30</button>
+<button class="dur-btn" data-dias="365" data-extra="50">1 Año<br>+$50</button>
+<button class="dur-btn" data-dias="9999" data-extra="100">♾️ Permanente<br>+$100</button>
 </div>
 
 <button class="pay-main" onclick="mostrarPago()">🚀 PAGAR AHORA</button>
 
-<!-- MODAL DE PAGO -->
 <div class="modal" id="modalPago">
 <div class="modal-content">
 <button class="back-btn" onclick="cerrarPago()">← Volver</button>
-<h2 style="color:#FFD700; text-align:center; margin: 10px 0;">Elige método de pago</h2>
+<h2 style="color:#FFD700; text-align:center;">Elige método de pago</h2>
 <div class="resumen" id="resumen"></div>
 <div id="ruletaSection">
 <div class="ruleta" id="ruleta"></div>
 <button class="ruleta-btn" onclick="girarRuleta()">🎰 GIRAR RULETA -5% a 15%</button>
-<p style="text-align:center; color:#aaa; font-size:12px;">Solo puedes girar 1 vez</p>
 </div>
 <button class="pay-main" style="background:#000; color:#FFD700;" onclick="pagar('Paypal')">💰 Paypal</button>
 <button class="pay-main" style="background:#000; color:#FFD700;" onclick="pagar('CryptoBot')">₿ CryptoBot</button>
 <button class="pay-main" style="background:#000; color:#FFD700;" onclick="pagar('Stars')">⭐ Stars</button>
 <button class="pay-main" style="background:#000; color:#FFD700;" onclick="pagar('Stripe')">💳 Stripe</button>
-<p style="color:#FFD700; text-align:center; font-size:13px; margin-top:15px;">⚡ Entrega inmediata después del pago</p>
+<p style="color:#FFD700; text-align:center; font-size:13px;">⚡ Entrega inmediata después del pago</p>
 </div>
 </div>
 
@@ -96,65 +92,89 @@ const VIP = {
 };
 
 function renderVips() {
-let html = '';
-for(let k in VIP) {
-html += `<div class="item" data-id="${k}"><div class="name">${VIP[k].n[idioma]}</div><div class="price">$${VIP[k].usd} / ${VIP[k].stars}⭐</div></div>`;
-}
-document.getElementById('vips').innerHTML = html;
-document.querySelectorAll('.item').forEach(i => i.onclick = () => {
-document.querySelectorAll('.item').forEach(x=>x.classList.remove('selected')); i.classList.add('selected'); vipSel=i.dataset.id;
-});
-document.querySelectorAll('.dur-btn').forEach(b => b.onclick = () => {
-document.querySelectorAll('.dur-btn').forEach(x=>x.classList.remove('selected')); b.classList.add('selected'); durSel=b.dataset;
-});
-}
-renderVips();
+    const contenedor = document.getElementById('vips');
+    contenedor.innerHTML = '';
+    for(let k in VIP) {
+        const div = document.createElement('div');
+        div.className = 'item';
+        div.dataset.id = k;
+        div.innerHTML = `<div class="name">${VIP[k].n[idioma]}</div><div class="price">$${VIP[k].usd} / ${VIP[k].stars}⭐</div>`;
+        div.onclick = function() {
+            document.querySelectorAll('.item').forEach(x=>x.classList.remove('selected'));
+            this.classList.add('selected');
+            vipSel = this.dataset.id;
+        };
+        contenedor.appendChild(div);
+    }
 
-function mostrarIdiomas() { idioma = (idioma+1)%4; document.querySelector('.lang-btn').innerText = banderas[idioma]; renderVips(); }
+    document.querySelectorAll('.dur-btn').forEach(b => {
+        b.onclick = function() {
+            document.querySelectorAll('.dur-btn').forEach(x=>x.classList.remove('selected'));
+            this.classList.add('selected');
+            durSel = this.dataset;
+        };
+    });
+}
+
+function cambiarIdioma() {
+    idioma = (idioma+1)%4;
+    document.querySelector('.lang-btn').innerText = banderas[idioma];
+    renderVips();
+}
 
 function calcularTotal() {
-let v = VIP[vipSel]; let extra = parseInt(durSel.extra);
-let totalUsd = v.usd + extra; let totalStars = v.stars + (extra*10);
-if(descuento > 0) {
-let descUsd = Math.floor(totalUsd * descuento / 100);
-let descStars = Math.floor(totalStars * descuento / 100);
-totalUsd -= descUsd; totalStars -= descStars;
-return {totalUsd, totalStars, descUsd, descStars}
-return {totalUsd, totalStars, descUsd:0, descStars:0}
+    let v = VIP[vipSel];
+    let extra = parseInt(durSel.extra);
+    let totalUsd = v.usd + extra;
+    let totalStars = v.stars + (extra*10);
+    if(descuento > 0) {
+        let descUsd = Math.floor(totalUsd * descuento / 100);
+        let descStars = Math.floor(totalStars * descuento / 100);
+        totalUsd -= descUsd;
+        totalStars -= descStars;
+        return {totalUsd, totalStars, descUsd, descStars}
+    }
+    return {totalUsd, totalStars, descUsd:0, descStars:0}
 }
 
 function mostrarPago() {
-if(!vipSel ||!durSel) { alert('Elige VIP y duración rey 👑'); return; }
-let v = VIP[vipSel]; let t = calcularTotal();
-let durText = durSel.dias==9999?'♾️ Permanente':durSel.dias+' días';
-document.getElementById('resumen').innerHTML = `
-<b>Plan:</b> ${v.n[idioma]}<br>
-<b>Duración:</b> ${durText}<br>
-<b>Subtotal:</b> $${v.usd + parseInt(durSel.extra)} / ${v.stars + parseInt(durSel.extra)*10}⭐<br>
-${descuento>0?`<b>Descuento Ruleta:</b> -${descuento}% = -$${t.descUsd} / -${t.descStars}⭐<br>`:''}
-<b style="color:#FFD700;">TOTAL A PAGAR:</b> $${t.totalUsd} / ${t.totalStars}⭐
-`;
-document.getElementById('modalPago').style.display='block';
+    if(!vipSel ||!durSel) { alert('Elige VIP y duración rey 👑'); return; }
+    let v = VIP[vipSel];
+    let t = calcularTotal();
+    let durText = durSel.dias=="9999"? '♾️ Permanente' : durSel.dias+' días';
+    document.getElementById('resumen').innerHTML = `
+    <b>Plan:</b> ${v.n[idioma]}<br>
+    <b>Duración:</b> ${durText}<br>
+    <b>Subtotal:</b> $${v.usd + parseInt(durSel.extra)} / ${v.stars + parseInt(durSel.extra)*10}⭐<br>
+    ${descuento>0? `<b>Descuento:</b> -${descuento}% = -$${t.descUsd} / -${t.descStars}⭐<br>` : ''}
+    <b style="color:#FFD700;">TOTAL:</b> $${t.totalUsd} / ${t.totalStars}⭐
+    `;
+    document.getElementById('modalPago').style.display='block';
 }
+
 function cerrarPago() { document.getElementById('modalPago').style.display='none'; }
 
 function girarRuleta() {
-if(ruletaUsada) return; ruletaUsada = true;
-let porcentajes = [5,5,8,8,10,10,12,15]; // bajos para no perder
-descuento = porcentajes[Math.floor(Math.random()*porcentajes.length)];
-let grados = 360*3 + (Math.random()*360);
-document.getElementById('ruleta').style.transform = `rotate(${grados}deg)`;
-setTimeout(()=>{ mostrarPago(); alert(`🎉 Ganaste ${descuento}% de descuento!`); }, 3000);
+    if(ruletaUsada) return;
+    ruletaUsada = true;
+    let porcentajes = [5,5,8,8,10,10,12,15];
+    descuento = porcentajes[Math.floor(Math.random()*porcentajes.length)];
+    let grados = 360*3 + (Math.random()*360);
+    document.getElementById('ruleta').style.transform = `rotate(${grados}deg)`;
+    setTimeout(()=>{ mostrarPago(); alert(`🎉 Ganaste ${descuento}% de descuento!`); }, 3000);
 }
 
 function pagar(metodo) {
-let v = VIP[vipSel]; let t = calcularTotal();
-tg.sendData(JSON.stringify({
-plan_id: vipSel, dias: durSel.dias, total_usd: t.totalUsd, total_stars: t.totalStars,
-descuento: descuento, metodo: metodo
-}));
-tg.close();
+    let v = VIP[vipSel];
+    let t = calcularTotal();
+    tg.sendData(JSON.stringify({
+        plan_id: vipSel, dias: durSel.dias, total_usd: t.totalUsd, total_stars: t.totalStars,
+        descuento: descuento, metodo: metodo
+    }));
+    tg.close();
 }
+
+window.onload = renderVips;
 </script>
 </body>
-                                                                                                                    </html>
+</html>
