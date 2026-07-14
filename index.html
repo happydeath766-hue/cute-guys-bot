@@ -30,13 +30,13 @@ body { background: linear-gradient(135deg, #0a0a0a 0%, #1a1200 50%, #0a0a0a 100%
 .back-btn { background: none; border: none; color: #FFD700; font-size: 22px; cursor: pointer; font-weight: 700; }
 .resumen { background: #1a1200; border: 1px solid #FFD700; border-radius: 12px; padding: 16px; margin: 18px 0; font-size: 14px; }
 
-/* RULETA CON SECCIONES */
-.ruleta-container { position: relative; width: 180px; height: 180px; margin: 20px auto; }
-.ruleta { width: 100%; height: 100%; border: 4px solid #FFD700; border-radius: 50%; position: relative; overflow: hidden; transition: transform 3s cubic-bezier(0.17, 0.67, 0.12, 1); }
-.ruleta-section { position: absolute; width: 50%; height: 50%; transform-origin: 100% 100%; display: flex; align-items: center; justify-content: center; font-weight: 800; color: #000; font-size: 16px; }
-.pointer { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent; border-top: 20px solid #FFD700; z-index: 10; }
+/* RULETA */
+.ruleta-container { position: relative; width: 200px; height: 200px; margin: 20px auto; }
+.ruleta { width: 100%; height: 100%; border: 5px solid #FFD700; border-radius: 50%; position: relative; transition: transform 3s cubic-bezier(0.17, 0.67, 0.12, 1); }
+.ruleta-section { position: absolute; width: 50%; height: 50%; transform-origin: 100% 100%; clip-path: polygon(0 0, 100% 0, 100% 100%); display: flex; align-items: flex-start; justify-content: center; padding-top: 15px; font-weight: 800; color: #000; font-size: 18px; }
+.pointer { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 14px solid transparent; border-right: 14px solid transparent; border-top: 22px solid #FFD700; z-index: 10; }
 .ruleta-btn { width: 100%; padding: 14px; background: #FFD700; color: #000; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; margin: 10px 0; font-size: 15px; }
-.ruleta-btn:disabled { background: #444; color: #888; }
+.ruleta-btn:disabled { background: #444; color: #888; cursor: not-allowed; }
 </style>
 </head>
 <body>
@@ -48,7 +48,7 @@ body { background: linear-gradient(135deg, #0a0a0a 0%, #1a1200 50%, #0a0a0a 100%
 <div class="free-groups">
 <b>🎁 GRUPOS GRATIS</b>
 <a href="https://t.me/+Z2EbBhJGY8UwYjlh" target="_blank">𝘾𝙪𝙩𝙚 𝙂𝙪𝙮𝙨 🔥</a>
-<a href="https://t.me/+CET3NNTylb8xOTYx" target="_blank">𝘾𝙪𝙩𝙚 𝙂𝙪𝙮𝙨 𝘾𝙝𝙖𝙣𝙣𝙚𝙡🔥</a>
+<a href="https://t.me/+CET3NNTylb8xOTYx" target="_blank">𝘾𝙪𝙩𝙚 𝙂𝙪𝙮𝙨 𝘾𝙝𝙖𝙣𝙚𝙡🔥</a>
 </div>
 
 <div class="section-title">📦 ELIGE TU VIP</div>
@@ -109,7 +109,7 @@ const VIP = {
 "todos": {n:["Todos 🔥","All 🔥","Todos 🔥","Все 🔥"], usd:100, stars:4800}
 };
 
-const PORCENTAJES = [5,5,8,8,10,10,12,15];
+const PORCENTAJES = [5,8,10,12,15,5,8,10]; // 8 secciones
 const COLORES = ['#FFD700','#FFF','#FFD700','#FFF','#FFD700','#FFF','#FFD700','#FFF'];
 
 function crearRuleta() {
@@ -120,8 +120,8 @@ function crearRuleta() {
         const div = document.createElement('div');
         div.className = 'ruleta-section';
         div.style.background = COLORES[i];
-        div.style.transform = `rotate(${i * angulo}deg) skewY(${90 - angulo}deg)`;
-        div.innerText = p + '%';
+        div.style.transform = `rotate(${i * angulo}deg)`;
+        div.innerHTML = `<span style="transform: rotate(${90 - i * angulo}deg);">${p}%</span>`;
         ruleta.appendChild(div);
     });
 }
@@ -173,9 +173,13 @@ function calcularTotal() {
 
 function mostrarPago() {
     if(!vipSel ||!durSel) { alert('Elige VIP y duración rey 👑'); return; }
-    descuento = 0; ruletaUsada = false; // reset al abrir
-    document.getElementById('btnRuleta').disabled = false;
-    document.getElementById('btnRuleta').innerText = '🎰 GIRAR RULETA -5% a 15%';
+    if(ruletaUsada) {
+        document.getElementById('btnRuleta').disabled = true;
+        document.getElementById('btnRuleta').innerText = `✅ Ya usaste ${descuento}%`;
+    } else {
+        document.getElementById('btnRuleta').disabled = false;
+        document.getElementById('btnRuleta').innerText = '🎰 GIRAR RULETA -5% a 15%';
+    }
     crearRuleta();
     actualizarResumen();
     document.getElementById('modalPago').style.display='block';
@@ -198,7 +202,7 @@ function actualizarResumen() {
 
 function cerrarPago() {
     document.getElementById('modalPago').style.display='none';
-    descuento = 0; ruletaUsada = false; // reset si cierra
+    // NO RESETEAR ruletaUsada
 }
 
 function volverARuleta() {
@@ -218,7 +222,7 @@ function girarRuleta() {
     document.getElementById('btnRuleta').disabled = true;
     let idx = Math.floor(Math.random()*PORCENTAJES.length);
     descuento = PORCENTAJES[idx];
-    let angulo = 360*4 + (idx * (360/PORCENTAJES.length));
+    let angulo = 360*4 + (idx * (360/PORCENTAJES.length)) + 22.5; // +22.5 para centrar
     document.getElementById('ruleta').style.transform = `rotate(${angulo}deg)`;
     setTimeout(()=>{
         actualizarResumen();
@@ -240,4 +244,4 @@ function pagar(metodo) {
 window.onload = renderVips;
 </script>
 </body>
-</html>
+    </html>
