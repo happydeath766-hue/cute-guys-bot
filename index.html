@@ -3,38 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cute Guys VIP</title>
+    <title>CUTE GUYS VIP</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { background: #0f0f0f; color: white; font-family: Arial; padding: 20px; text-align: center; }
-        h1 { color: #ff4d6d; }
-        .card { background: #1a1a1a; border: 2px solid #ff4d6d; border-radius: 15px; padding: 20px; margin: 15px 0; }
-        .precio { font-size: 30px; color: #4dff88; font-weight: bold; }
-        button { background: #ff4d6d; color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; }
-        button:active { background: #ff1a4d; }
+        body { background: #0a0a0a; color: #f5f5f5; font-family: 'Georgia', serif; padding: 15px; border: 3px solid #d4af37; border-radius: 20px; }
+        h1 { text-align: center; color: #d4af37; font-size: 28px; text-shadow: 0 0 10px #d4af37; }
+        h2 { color: #d4af37; border-bottom: 2px solid #d4af37; padding-bottom: 5px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .card { background: #1a1a1a; border: 1px solid #d4af37; border-radius: 15px; padding: 12px; text-align: center; }
+        .precio { color: #4dff88; font-weight: bold; font-size: 16px; }
+        .stars { color: #ffd700; font-size: 14px; }
+        .btn { background: linear-gradient(90deg, #d4af37, #b8860b); color: #000; border: none; padding: 12px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 8px; }
+        .btn:hover { transform: scale(1.03); }
+        .grupo { background: #222; padding: 10px; border-radius: 10px; margin: 5px 0; }
+        a { color: #4dff88; text-decoration: none; }
     </style>
 </head>
 <body>
-    <h1>✨ CUTE GUYS VIP ✨</h1>
-    <p>Elige tu acceso</p>
+    <h1>✨ CUTE GUYS VIP STORE ✨</h1>
 
-    <div class="card">
-        <h2>VIP Básico</h2>
-        <p>7 Días de acceso</p>
-        <p class="precio">$5 USDT</p>
-        <button onclick="comprar('basico')">COMPRAR AHORA</button>
+    <h2>💎 PAQUETES MENSUALES</h2>
+    <div class="grid">
+        <div class="card"><b>PROHIBIDO</b><div class="precio">$15 USD</div><div class="stars">800 ⭐</div><button class="btn" onclick="pagar('prohibido')">COMPRAR</button></div>
+        <div class="card"><b>TWINKS</b><div class="precio">$15 USD</div><div class="stars">800 ⭐</div><button class="btn" onclick="pagar('twinks')">COMPRAR</button></div>
+        <div class="card"><b>ADULTOS</b><div class="precio">$10 USD</div><div class="stars">500 ⭐</div><button class="btn" onclick="pagar('adultos')">COMPRAR</button></div>
+        <div class="card"><b>PERSONALIZADO</b><div class="precio">$70 USD</div><div class="stars">3,500 ⭐</div><button class="btn" onclick="pagar('personalizado')">COMPRAR</button></div>
+        <div class="card"><b>TWINKS + PROHIBIDO</b><div class="precio">$27 USD</div><div class="stars">1,600 ⭐</div><button class="btn" onclick="pagar('combo1')">COMPRAR</button></div>
+        <div class="card"><b>TWINKS + ADULTOS</b><div class="precio">$17 USD</div><div class="stars">1,100 ⭐</div><button class="btn" onclick="pagar('combo2')">COMPRAR</button></div>
+        <div class="card"><b>PROHIBIDO + ADULTOS</b><div class="precio">$15 USD</div><div class="stars">1,100 ⭐</div><button class="btn" onclick="pagar('combo3')">COMPRAR</button></div>
+        <div class="card"><b>PERSONALIZADO + OTRO</b><div class="precio">$80 USD</div><div class="stars">3,800 ⭐</div><button class="btn" onclick="pagar('combo4')">COMPRAR</button></div>
+        <div class="card" style="grid-column: span 2;"><b>🔥 TODOS</b><div class="precio">$100 USD</div><div class="stars">4,800 ⭐</div><button class="btn" onclick="pagar('todos')">COMPRAR TODO</button></div>
     </div>
 
-    <div class="card">
-        <h2>VIP Premium</h2>
-        <p>30 Días de acceso</p>
-        <p class="precio">$15 USDT</p>
-        <button onclick="comprar('premium')">COMPRAR AHORA</button>
+    <h2>👑 SUSCRIPCIONES</h2>
+    <div class="grid">
+        <div class="card"><b>TWINKS ANUAL</b><div class="precio">$30 USD</div><button class="btn" onclick="pagar('twinks_anual')">COMPRAR</button></div>
+        <div class="card"><b>TWINKS PERMANENTE</b><div class="precio">$60 USD</div><button class="btn" onclick="pagar('twinks_perm')">COMPRAR</button></div>
+        <div class="card"><b>PROHIBIDO ANUAL</b><div class="precio">$40 USD</div><button class="btn" onclick="pagar('pro_anual')">COMPRAR</button></div>
+        <div class="card"><b>PROHIBIDO PERMANENTE</b><div class="precio">$80 USD</div><button class="btn" onclick="pagar('pro_perm')">COMPRAR</button></div>
+        <div class="card"><b>ADULTOS ANUAL</b><div class="precio">$15 USD</div><button class="btn" onclick="pagar('adult_anual')">COMPRAR</button></div>
+        <div class="card"><b>ADULTOS PERMANENTE</b><div class="precio">$30 USD</div><button class="btn" onclick="pagar('adult_perm')">COMPRAR</button></div>
     </div>
 
-    <div class="card">
-        <h2>VIP ULTRA</h2>
-        <p>90 Días de acceso</p>
+    <h2>🎁 GRUPOS GRATIS</h2>
+    <div class="grupo">𝘾𝙪𝙩𝙚 𝙂𝙪𝙮𝙨 🔥 <br><a href="https://t.me/+Z2EbBhJGY8UwYjlh">ENTRAR AQUÍ</a></div>
+    <div class="grupo">𝘾𝙪𝙩𝙚 𝙂𝙪𝙮𝙨 𝘾𝙝𝙖𝙣𝙚𝙡🔥 <br><a href="https://t.me/+CET3NNTylb8xOTYx">ENTRAR AQUÍ</a></div>
+
+    <h2>💳 MÉTODOS DE PAGO</h2>
+    <div class="grid">
+        <button class="btn" onclick="pago('paypal')">PAYPAL</button>
+        <button class="btn" onclick="pago('cryptobot')">CRYPTOBOT</button>
+        <button class="btn" onclick="pago('stars')">TELEGRAM STARS</button>
+        <button class="btn" onclick="pago('stripe')">TARJETA / STRIPE</button>
+    </div>
+
+    <script>
+        let tg = window.Telegram.WebApp; tg.expand();
+        let paquete_seleccionado = "";
+        function pagar(p) { paquete_seleccionado = p; alert("Paquete: " + p + ". Ahora elige método de pago abajo"); }
+        function pago(metodo) {
+            if(paquete_seleccionado == "") { alert("Primero elige un paquete arriba"); return; }
+            tg.sendData(JSON.stringify({paquete: paquete_seleccionado, metodo: metodo})); 
+            tg.close();
+        }
+    </script>
+</body>
+    </html>        <p>90 Días de acceso</p>
         <p class="precio">$35 USDT</p>
         <button onclick="comprar('vip')">COMPRAR AHORA</button>
     </div>
