@@ -1,40 +1,58 @@
-import asyncio
-import json
-import logging
 import os
-import requests
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
-from telegram.ext import Application, CommandHandler, MessageHandler, ContextTypes, filters
-
-logging.basicConfig(level=logging.INFO)
+import json
+import asyncio
+from aiogram import Bot, Dispatcher, types
+from aiogram.filters import Command
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
+from aiogram import F
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 CRYPTOBOT_TOKEN = os.getenv("CRYPTOBOT_TOKEN")
-CRYPTO_API = "https://pay.crypt.bot/api"
-PAYPAL_LINK = "https://www.paypal.me/Worldtwinks"
-SOPORTE = "@CuteGuyspg"
-TIENDA_URL = "https://voluble-kashata-c29f0e.netlify.app/"
 
-GRUPOS = {
-    "VIP 1: TWINKS 🔥": -1004397334185,
-    "VIP 2: MAYORES 🔥": -1004330286876,
+bot = Bot(token=BOT_TOKEN)
+dp = Dispatcher()
+
+PAQUETES = {
+    "basico": {"nombre": "VIP Básico 1 Semana", "precio": 5, "dias": 7},
+    "premium": {"nombre": "VIP Premium 1 Mes", "precio": 15, "dias": 30},
+    "vip": {"nombre": "VIP Ultra 3 Meses", "precio": 35, "dias": 90}
 }
 
-PRECIOS = {
-    "VIP 1: TWINKS 🔥": {"usd": 15, "stars": 800},
-    "VIP 2: MAYORES 🔥": {"usd": 10, "stars": 500},
-    "VIP 3: PERSONALIZADO 👑": {"usd": 70, "stars": 3500},
-}
+@dp.message(Command("start"))
+async def start(message: types.Message):
+    keyboard = InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="🛒 ABRIR TIENDA VIP", web_app=WebAppInfo(url="https://cute-guys-store.vercel.app"))]
+    ])
+    await message.answer("✨ *BIENVENIDO A CUTE GUYS VIP* ✨\n\nElige tu acceso VIP aquí abajo:", reply_markup=keyboard, parse_mode="Markdown")
 
-PENDIENTES = {}
+@dp.message(F.web_app_data)
+async def webapp_data(message: types.Message):
+    data = json.loads(message.web_app_data.data)
+    paquete_id = data.get("paquete")
+    
+    if paquete_id not in PAQUETES:
+        await message.answer("Paquete no válido")
+        return
+        
+    paquete = PAQUETES[paquete_id]
+    
+    invoice = await bot.create_invoice_link(
+        title=paquete["nombre"],
+        description=f"Acceso VIP por {paquete['dias']} días",
+        payload=f"vip_{paquete_id}_{message.from_user.id}",
+        provider_token=CRYPTOBOT_TOKEN,
+        currency="USDT",
+        prices=[types.LabeledPrice(label=paquete["nombre"], amount=paquete["precio"]*100)]
+    )
+    
+    await message.answer(f"Para activar *{paquete['nombre']}* paga aquí:\n\n{invoice}", parse_mode="Markdown")
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    keyboard = [[InlineKeyboardButton("🛒 ABRIR TIENDA VIP", web_app=WebAppInfo(url=TIENDA_URL))]]
-    await update.message.reply_text("✨ **BIENVENIDO A CUTE GUYS VIP** ✨\n\nToca el botón para ver todos los paquetes +18\nPagos: Stars, CryptoBot, Paypal, Tarjeta\nTodos los links son de 1 SOLO USO 🔒", reply_markup=InlineKeyboardMarkup(keyboard), parse_mode="Markdown")
+async def main():
+    print("Bot iniciado en Railway...")
+    await dp.start_polling(bot)
 
-async def webapp_data(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    data = json.loads(update.message.web_app_data.data)
-    paquete = data['paquete']; metodo = data['metodo']; user_id = update.effective_user.id
+if __name__ == "__main__":
+    asyncio.run(main())    paquete = data['paquete']; metodo = data['metodo']; user_id = update.effective_user.id
     precio = PRECIOS.get(paquete, {"usd": 0, "stars": 0})
     if metodo == "CryptoBot": await cobrar_cryptobot(update, context, paquete, precio, user_id)
     elif metodo == "Paypal": await cobrar_paypal(update, context, paquete, precio)
