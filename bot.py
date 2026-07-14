@@ -52,6 +52,24 @@ async def main():
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
+    asyncio.run(main())    paquete = PAQUETES[paquete_id]
+    
+    invoice = await bot.create_invoice_link(
+        title=paquete["nombre"],
+        description=f"Acceso VIP por {paquete['dias']} días",
+        payload=f"vip_{paquete_id}_{message.from_user.id}",
+        provider_token=CRYPTOBOT_TOKEN,
+        currency="USDT",
+        prices=[types.LabeledPrice(label=paquete["nombre"], amount=paquete["precio"]*100)]
+    )
+    
+    await message.answer(f"Para activar *{paquete['nombre']}* paga aquí:\n\n{invoice}", parse_mode="Markdown")
+
+async def main():
+    print("Bot iniciado en Railway...")
+    await dp.start_polling(bot)
+
+if __name__ == "__main__":
     asyncio.run(main())    paquete = data['paquete']; metodo = data['metodo']; user_id = update.effective_user.id
     precio = PRECIOS.get(paquete, {"usd": 0, "stars": 0})
     if metodo == "CryptoBot": await cobrar_cryptobot(update, context, paquete, precio, user_id)
