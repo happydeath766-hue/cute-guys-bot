@@ -87,7 +87,7 @@ async def webapp_data(message: types.Message):
         await message.answer("❌ Hubo un error procesando tu pago. Habla con soporte.")
 import json
 
-@dp.message_handler(content_types=types.ContentType.WEB_APP_DATA)
+@dp.message(F.web_app_data)
 async def handle_web_app_data(message: types.Message):
     try:
         data = json.loads(message.web_app_data.data)
@@ -97,9 +97,11 @@ async def handle_web_app_data(message: types.Message):
         plan_id = data.get("plan_id")
         precio = data.get("precio")
         
-        await message.answer(f"✅ Recibí tu pago con: {metodo}\nPlan: {plan_id}\nPrecio: ${precio} USD")
+        await message.answer(f"✅ Recibí tu pago\nMétodo: {metodo}\nPlan: {plan_id}\nPrecio: ${precio} USD")
         
-        # AQUÍ YA PUEDES PROCESAR PAYPAL/CRYPTO
+    except Exception as e:
+        print(f"Error al leer datos: {e}")
+        await message.answer("❌ Error procesando datos")
         
     except Exception as e:
         print(f"Error: {e}")
