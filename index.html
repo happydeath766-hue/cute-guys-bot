@@ -109,7 +109,9 @@ body { background: linear-gradient(135deg, #0a0a0a 0%, #1a1200 50%, #0a0a0a 100%
 
 <script>
 let vipSel = null, durSel = null, idioma = 0, descuento = 0, ruletaUsada = false;
-const tg = window.Telegram.WebApp; tg.expand();
+const tg = window.Telegram.WebApp;
+tg.ready();
+tg.expand();
 const banderas = ['🇪🇸','🇺🇸','🇧🇷','🇷🇺'];
 
 const VIP = {
