@@ -3,115 +3,129 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CUTE GUYS VIP</title>
+<title>CUTE GUYS SUBSCRIPTIONS</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;800&display=swap" rel="stylesheet">
 <style>
-body { background: linear-gradient(135deg, #0a0a0a 0%, #1a1200 100%); color: #fff; font-family: 'Poppins', Arial; margin: 0; padding: 15px; }
+body { background: linear-gradient(135deg, #0a0a0a 0%, #1a1200 50%, #0a0a0a 100%); color: #fff; font-family: 'Montserrat', Arial; margin: 0; padding: 15px; }
 .header { display: flex; justify-content: space-between; align-items: center; }
-.title { font-size: 28px; font-weight: 700; background: linear-gradient(90deg, #FFD700, #FFF8DC); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.lang-btn { background: #000; border: 2px solid #FFD700; color: #FFD700; border-radius: 50%; width: 40px; height: 40px; font-size: 20px; cursor: pointer; }
-.free-groups { background: #000; border: 2px solid #FFD700; border-radius: 12px; padding: 15px; margin: 15px 0; text-align: center; }
-.free-groups b { color: #FFD700; font-size: 16px; }
-.free-groups a { color: #FFF8DC; text-decoration: none; font-weight: 600; display: block; margin: 8px 0; }
-.section { margin: 25px 0; }
-.section-title { color: #FFD700; font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+.title { font-size: 26px; font-weight: 800; background: linear-gradient(90deg, #FFD700, #FFF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.lang-btn { background: #000; border: 2px solid #FFD700; border-radius: 50%; width: 42px; height: 42px; font-size: 24px; cursor: pointer; }
+.free-groups { background: #000; border: 2px solid #FFD700; border-radius: 14px; padding: 15px; margin: 15px 0; text-align: center; }
+.free-groups b { color: #FFD700; font-size: 17px; }
+.free-groups a { color: #FFF; text-decoration: none; font-weight: 600; display: block; margin: 8px 0; }
+.section-title { color: #FFD700; font-size: 19px; font-weight: 800; margin: 20px 0 10px 0; }
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .item { background: #000; border: 2px solid #333; border-radius: 12px; padding: 14px; text-align: center; cursor: pointer; transition: 0.2s; }
-.item.selected { border: 2px solid #FFD700; background: #1a1200; box-shadow: 0 0 15px #FFD700; }
-.item .name { font-weight: 700; font-size: 15px; }
+.item.selected { border: 2px solid #FFD700; background: #1a1200; box-shadow: 0 0 20px #FFD700; }
+.item .name { font-weight: 800; font-size: 15px; color: #FFF; }
 .item .price { color: #FFD700; font-weight: 600; font-size: 13px; margin-top: 5px; }
-.item .days { color: #aaa; font-size: 12px; }
-.pay-btn { width: 100%; padding: 16px; margin: 10px 0; border: 2px solid #FFD700; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; background: #000; color: #FFD700; transition: 0.2s; }
-.pay-btn:hover { background: #1a1200; box-shadow: 0 0 10px #FFD700; }
+.duracion { display: flex; gap: 8px; margin: 20px 0; }
+.dur-btn { flex: 1; background: #000; border: 2px solid #333; color: #FFF; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; }
+.dur-btn.selected { border-color: #FFD700; background: #1a1200; color: #FFD700; }
+.pay-main { width: 100%; padding: 18px; margin: 20px 0; border: 2px solid #FFD700; border-radius: 14px; font-size: 18px; font-weight: 800; cursor: pointer; background: linear-gradient(90deg, #FFD700, #FFF); color: #000; }
+.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 100; animation: fadeIn 0.3s; }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+.modal-content { background: #000; border: 2px solid #FFD700; border-radius: 16px; padding: 20px; margin: 10% 15px; }
+.back-btn { background: none; border: none; color: #FFD700; font-size: 24px; cursor: pointer; }
+.resumen { background: #1a1200; border: 1px solid #FFD700; border-radius: 10px; padding: 15px; margin: 15px 0; }
 </style>
 </head>
 <body>
 <div class="header">
 <div class="title">CUTE GUYS VIP 👑</div>
-<button class="lang-btn" onclick="cambiarIdioma()">🌐</button>
+<button class="lang-btn" onclick="mostrarIdiomas()">🇪🇸</button>
 </div>
 
 <div class="free-groups">
 <b>🎁 GRUPOS GRATIS</b>
 <a href="https://t.me/+Z2EbBhJGY8UwYjlh" target="_blank">𝘾𝙪𝙩𝙚 𝙂𝙪𝙮𝙨 🔥</a>
-<a href="https://t.me/+CET3NNTylb8xOTYx" target="_blank">𝘾𝙪𝙩𝙚 𝙂𝙪𝙮𝙨 𝘾𝙝𝙖𝙣𝙚𝙡🔥</a>
+<a href="https://t.me/+CET3NNTylb8xOTYx" target="_blank">𝘾𝙪𝙩𝙚 𝙂𝙪𝙮𝙨 𝘾𝙝𝙖𝙣𝙣𝙚𝙡🔥</a>
 </div>
 
-<div class="section">
-<div class="section-title">📦 PAQUETES MENSUALES</div>
-<div class="grid" id="paquetes"></div>
+<div class="section-title">📦 ELIGE TU VIP</div>
+<div class="grid" id="vips"></div>
+
+<div class="section-title">⏰ ELIGE DURACIÓN</div>
+<div class="duracion">
+<button class="dur-btn" data-dias="30" data-mult="1">1 Mes</button>
+<button class="dur-btn" data-dias="365" data-mult="12">1 Año</button>
+<button class="dur-btn" data-dias="9999" data-mult="999">♾️ Permanente</button>
 </div>
 
-<div class="section">
-<div class="section-title">💎 SUSCRIPCIONES</div>
-<div class="grid" id="suscripciones"></div>
-</div>
+<button class="pay-main" onclick="mostrarPago()">🚀 PAGAR AHORA</button>
 
-<button class="pay-btn" onclick="pagar('Paypal')">💰 Pagar con Paypal</button>
-<button class="pay-btn" onclick="pagar('CryptoBot')">₿ Pagar con CryptoBot</button>
-<button class="pay-btn" onclick="pagar('Stars')">⭐ Pagar con Stars</button>
-<button class="pay-btn" onclick="pagar('Stripe')">💳 Pagar con Stripe</button>
+<!-- MODAL DE PAGO -->
+<div class="modal" id="modalPago">
+<div class="modal-content">
+<button class="back-btn" onclick="cerrarPago()">←</button>
+<h2 style="color:#FFD700; text-align:center;">Elige método de pago</h2>
+<div class="resumen" id="resumen"></div>
+<button class="pay-main" style="background:#000; color:#FFD700;" onclick="pagar('Paypal')">💰 Paypal</button>
+<button class="pay-main" style="background:#000; color:#FFD700;" onclick="pagar('CryptoBot')">₿ CryptoBot</button>
+<button class="pay-main" style="background:#000; color:#FFD700;" onclick="pagar('Stars')">⭐ Stars</button>
+<button class="pay-main" style="background:#000; color:#FFD700;" onclick="pagar('Stripe')">💳 Stripe</button>
+<p style="color:#FFD700; text-align:center; font-size:12px;">⚡ Entrega inmediata después del pago</p>
+</div>
+</div>
 
 <script>
-let selected = null;
-let idioma = 0;
-const idiomas = ['ES','EN','PT','RU'];
-const tg = window.Telegram.WebApp;
-tg.expand();
+let vipSel = null, durSel = null, idioma = 0;
+const tg = window.Telegram.WebApp; tg.expand();
+const banderas = ['🇪🇸','🇺🇸','🇧🇷','🇷🇺'];
 
-const PAQUETES = [
-{id: "prohibido", nombre: ["Prohibido", "Forbidden", "Proibido", "Запрещено"], precio_usd: 15, precio_stars: 800, dias: 30},
-{id: "twinks", nombre: ["Twinks", "Twinks", "Twinks", "Твинки"], precio_usd: 15, precio_stars: 800, dias: 30},
-{id: "adultos", nombre: ["Adultos", "Adults", "Adultos", "Взрослые"], precio_usd: 10, precio_stars: 500, dias: 30},
-{id: "personalizado", nombre: ["Personalizado", "Custom", "Personalizado", "Индивидуальный"], precio_usd: 70, precio_stars: 3500, dias: 30},
-{id: "twinks_prohibido", nombre: ["Twinks + Prohibido", "Twinks + Forbidden", "Twinks + Proibido", "Твинки + Запрещено"], precio_usd: 27, precio_stars: 1600, dias: 30},
-{id: "twinks_adultos", nombre: ["Twinks + Adultos", "Twinks + Adults", "Twinks + Adultos", "Твинки + Взрослые"], precio_usd: 17, precio_stars: 1100, dias: 30},
-{id: "prohibido_adultos", nombre: ["Prohibido + Adultos", "Forbidden + Adults", "Proibido + Adultos", "Запрещено + Взрослые"], precio_usd: 15, precio_stars: 1100, dias: 30},
-{id: "personalizado_otro", nombre: ["Personalizado + Otro", "Custom + Other", "Personalizado + Outro", "Индив + Другой"], precio_usd: 80, precio_stars: 3800, dias: 30},
-{id: "todos", nombre: ["Todos 🔥", "All 🔥", "Todos 🔥", "Все 🔥"], precio_usd: 100, precio_stars: 4800, dias: 30}
-];
+const VIP = {
+"prohibido": {n:["Prohibido","Forbidden","Proibido","Запрещено"], usd:15, stars:800},
+"twinks": {n:["Twinks","Twinks","Twinks","Твинки"], usd:15, stars:800},
+"adultos": {n:["Adultos","Adults","Adultos","Взрослые"], usd:10, stars:500},
+"personalizado": {n:["Personalizado","Custom","Personalizado","Индивидуальный"], usd:70, stars:3500},
+"twinks_prohibido": {n:["Twinks + Prohibido","Twinks + Forbidden","Twinks + Proibido","Твинки + Запрещено"], usd:27, stars:1600},
+"twinks_adultos": {n:["Twinks + Adultos","Twinks + Adults","Twinks + Adultos","Твинки + Взрослые"], usd:17, stars:1100},
+"prohibido_adultos": {n:["Prohibido + Adultos","Forbidden + Adults","Proibido + Adultos","Запрещено + Взрослые"], usd:15, stars:1100},
+"personalizado_otro": {n:["Personalizado + Otro","Custom + Other","Personalizado + Outro","Индив + Другой"], usd:80, stars:3800},
+"todos": {n:["Todos 🔥","All 🔥","Todos 🔥","Все 🔥"], usd:100, stars:4800}
+};
 
-const SUSCRIPCIONES = [
-{id: "twinks_anual", nombre: ["Twinks Anual", "Twinks Annual", "Twinks Anual", "Твинки Год"], precio_usd: 30, precio_stars: 3000, dias: 365},
-{id: "twinks_perma", nombre: ["Twinks Permanente", "Twinks Lifetime", "Twinks Vitalício", "Твинки Навсегда"], precio_usd: 60, precio_stars: 6000, dias: 9999},
-{id: "prohibido_anual", nombre: ["Prohibido Anual", "Forbidden Annual", "Proibido Anual", "Запрещено Год"], precio_usd: 40, precio_stars: 4000, dias: 365},
-{id: "prohibido_perma", nombre: ["Prohibido Permanente", "Forbidden Lifetime", "Proibido Vitalício", "Запрещено Навсегда"], precio_usd: 80, precio_stars: 8000, dias: 9999},
-{id: "adultos_anual", nombre: ["Adultos Anual", "Adults Annual", "Adultos Anual", "Взрослые Год"], precio_usd: 15, precio_stars: 1500, dias: 365},
-{id: "adultos_perma", nombre: ["Adultos Permanente", "Adults Lifetime", "Adultos Vitalício", "Взрослые Навсегда"], precio_usd: 30, precio_stars: 3000, dias: 9999}
-];
-
-function render() {
-document.getElementById('paquetes').innerHTML = '';
-PAQUETES.forEach(p => {
-document.getElementById('paquetes').innerHTML += `<div class="item" data-id="${p.id}"><div class="name">${p.nombre[idioma]}</div><div class="price">$${p.precio_usd} / ${p.precio_stars}⭐</div><div class="days">${p.dias} días</div></div>`;
-});
-document.getElementById('suscripciones').innerHTML = '';
-SUSCRIPCIONES.forEach(s => {
-document.getElementById('suscripciones').innerHTML += `<div class="item" data-id="${s.id}"><div class="name">${s.nombre[idioma]}</div><div class="price">$${s.precio_usd} / ${s.precio_stars}⭐</div><div class="days">${s.dias==9999?'♾️ Permanente':s.dias+' días'}</div></div>`;
-});
-
-document.querySelectorAll('.item').forEach(item => {
-item.onclick = () => {
-document.querySelectorAll('.item').forEach(i => i.classList.remove('selected'));
-item.classList.add('selected');
-selected = item.dataset.id;
+function renderVips() {
+let html = '';
+for(let k in VIP) {
+html += `<div class="item" data-id="${k}"><div class="name">${VIP[k].n[idioma]}</div><div class="price">$${VIP[k].usd} / ${VIP[k].stars}⭐</div></div>`;
 }
+document.getElementById('vips').innerHTML = html;
+document.querySelectorAll('.item').forEach(i => i.onclick = () => {
+document.querySelectorAll('.item').forEach(x=>x.classList.remove('selected')); i.classList.add('selected'); vipSel=i.dataset.id;
+});
+document.querySelectorAll('.dur-btn').forEach(b => b.onclick = () => {
+document.querySelectorAll('.dur-btn').forEach(x=>x.classList.remove('selected')); b.classList.add('selected'); durSel=b.dataset;
 });
 }
+renderVips();
 
-function cambiarIdioma() {
-idioma = (idioma + 1) % 4;
-render();
+function mostrarIdiomas() {
+idioma = (idioma+1)%4; document.querySelector('.lang-btn').innerText = banderas[idioma]; renderVips();
 }
+
+function mostrarPago() {
+if(!vipSel || !durSel) { alert('Elige VIP y duración rey 👑'); return; }
+let v = VIP[vipSel]; let mult = durSel.mult==999?999:durSel.mult;
+let totalUsd = v.usd * (durSel.mult==999?12:durSel.mult); let totalStars = v.stars * (durSel.mult==999?12:durSel.mult);
+if(durSel.mult==999) { totalUsd = v.usd*4; totalStars = v.stars*4; } // Permanente x4
+document.getElementById('resumen').innerHTML = `
+<b>Plan:</b> ${v.n[idioma]}<br>
+<b>Duración:</b> ${durSel.dias==9999?'♾️ Permanente':durSel.dias+' días'}<br>
+<b>Total:</b> $${totalUsd} / ${totalStars}⭐
+`;
+document.getElementById('modalPago').style.display='block';
+}
+function cerrarPago() { document.getElementById('modalPago').style.display='none'; }
 
 function pagar(metodo) {
-if(!selected) { alert('Primero selecciona un VIP rey 👑'); return; }
-tg.sendData(JSON.stringify({plan_id: selected, metodo: metodo}));
+let v = VIP[vipSel]; let mult = durSel.mult==999?999:durSel.mult;
+let totalUsd = v.usd * (durSel.mult==999?12:durSel.mult); let totalStars = v.stars * (durSel.mult==999?12:durSel.mult);
+if(durSel.mult==999) { totalUsd = v.usd*4; totalStars = v.stars*4; }
+tg.sendData(JSON.stringify({plan_id: vipSel, dias: durSel.dias, total_usd: totalUsd, total_stars: totalStars, metodo: metodo}));
 tg.close();
 }
-
-render();
 </script>
 </body>
 </html>
