@@ -10,6 +10,7 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 CRYPTOBOT_TOKEN = os.getenv("CRYPTOBOT_TOKEN")
 PAYPAL_LINK = "https://www.paypal.me/Worldtwinks" # CAMBIA ESTO
 PAYPAL_USER = "@Worldtwinks" # CAMBIA ESTO
+SOPORTE_LINK = "https://telegram.me/CuteGuyspg"
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
@@ -29,14 +30,16 @@ VIP = {
 @dp.message(Command("start"))
 async def start(message: types.Message):
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="🚀 ABRIR TIENDA VIP", web_app=WebAppInfo(url="https://cute-guys-bot.vercel.app"))]
+        [InlineKeyboardButton(text="🚀 ABRIR TIENDA VIP", web_app=WebAppInfo(url="https://cute-guys-bot.vercel.app"))],
+        [InlineKeyboardButton(text="💬 HABLAR CON SOPORTE", url=SOPORTE_LINK)]
     ])
     await message.answer(
         "✨ *BIENVENIDO A CUTE GUYS SUBSCRIPTIONS* ✨\n\n"
-        "👑 El acceso VIP más exclusivo de Telegram\n"
-        "⚡ Entrega inmediata después del pago\n"
-        "🎁 Incluye 2 grupos gratis\n"
-        "Elige tu plan aquí abajo:",
+        "👑 *El acceso VIP más exclusivo de Telegram*\n\n"
+        "🎁 Incluye acceso a 2 grupos gratis\n"
+        "⚡ *Entrega inmediata* después de confirmar tu pago\n"
+        "🔒 Pagos seguros: Paypal, Crypto, Stars, Tarjeta\n"
+        "Selecciona tu plan VIP aquí abajo:",
         reply_markup=keyboard, parse_mode="Markdown"
     )
 
@@ -47,11 +50,13 @@ async def webapp_data(message: types.Message):
     dias = int(data["dias"])
     total_usd = int(data["total_usd"])
     total_stars = int(data["total_stars"])
+    descuento = int(data["descuento"])
     metodo = data["metodo"]
-    
+
     plan = VIP[plan_id]
     dur_text = "♾️ Permanente" if dias==9999 else f"{dias} días"
-    
+    desc_text = f"\n**Descuento:** -{descuento}%" if descuento>0 else ""
+
     if metodo == "Stars":
         await bot.send_invoice(
             chat_id=message.from_user.id, title=f"{plan['nombre']} - {dur_text}",
@@ -65,11 +70,11 @@ async def webapp_data(message: types.Message):
             payload=f"vip_{plan_id}_{dias}_{message.from_user.id}", provider_token=CRYPTOBOT_TOKEN, currency="USDT",
             prices=[LabeledPrice(label=f"{plan['nombre']} {dur_text}", amount=total_usd*100)]
         )
-        await message.answer(f"✅ *PEDIDO RECIBIDO*\n\n**Plan:** {plan['nombre']}\n**Duración:** {dur_text}\n**Total:** ${total_usd} USD\n\nPaga aquí: {invoice}", parse_mode="Markdown")
+        await message.answer(f"✅ *PEDIDO RECIBIDO*\n\n**Plan:** {plan['nombre']}\n**Duración:** {dur_text}{desc_text}\n**Total:** ${total_usd} USD\n\nPaga aquí: {invoice}", parse_mode="Markdown")
     elif metodo == "Paypal":
-        await message.answer(f"✅ *PEDIDO RECIBIDO*\n\n**Plan:** {plan['nombre']}\n**Duración:** {dur_text}\n**Total:** ${total_usd} USD\n\n💰 Paga por Paypal a: {PAYPAL_USER}\nLink: {PAYPAL_LINK}\n\nMándame el comprobante aquí para activar ⚡")
+        await message.answer(f"✅ *PEDIDO RECIBIDO*\n\n**Plan:** {plan['nombre']}\n**Duración:** {dur_text}{desc_text}\n**Total:** ${total_usd} USD\n💰 *Paga por Paypal a:* {PAYPAL_USER}\nLink: {PAYPAL_LINK}\n\nMándame el comprobante aquí para activar ⚡")
     elif metodo == "Stripe":
-        await message.answer(f"✅ *PEDIDO RECIBIDO*\n\n**Plan:** {plan['nombre']}\n**Duración:** {dur_text}\n**Total:** ${total_usd} USD\n\n💳 Toca CryptoBot y elige pagar con tarjeta. Stripe procesa y te llega USDT.")
+        await message.answer(f"✅ *PEDIDO RECIBIDO*\n\n**Plan:** {plan['nombre']}\n**Duración:** {dur_text}{desc_text}\n**Total:** ${total_usd} USD\n💳 *Paga con tarjeta:* Toca CryptoBot > Pagar con Tarjeta. Stripe procesa y recibo USDT.")
 
 async def main():
     print("Bot iniciado...")
