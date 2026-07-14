@@ -4,7 +4,7 @@ import asyncio
 import logging
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo, LabeledPrice
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
 from aiogram import F
 from aiocryptopay import AioCryptoPay, Networks
 logging.basicConfig(level=logging.INFO)
@@ -33,9 +33,9 @@ VIP = {
 @dp.message(Command("start"))
 async def start(message: types.Message):
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="🚀 ABRIR TIENDA VIP", web_app=WebAppInfo(url="https://cute-guys-bot.vercel.app"))],
-        [InlineKeyboardButton(text="💬 HABLAR CON SOPORTE", url=SOPORTE_LINK)]
-    ])
+    [InlineKeyboardButton(text="🔥 COMPRAR VIP", web_app=WebAppInfo(url="https://happydeath766-hue.github.io/cute-guys-bot/indexv2.html"))],
+    [InlineKeyboardButton(text="💬 Soporte", url="https://t.me/CuteGuyspg")]
+])
     await message.answer(
         "✨ *BIENVENIDO A CUTE GUYS SUBSCRIPTIONS* ✨\n\n"
         "👑 *El acceso VIP más exclusivo de Telegram*\n\n"
