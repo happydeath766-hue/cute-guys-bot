@@ -21,7 +21,7 @@ PAQUETES = {
 @dp.message(Command("start"))
 async def start(message: types.Message):
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
-        [InlineKeyboardButton(text="🛒 ABRIR TIENDA VIP", web_app=WebAppInfo(url="https://cute-guys-store.vercel.app"))]
+        [InlineKeyboardButton(text="🛒 ABRIR TIENDA VIP",  web_app=WebAppInfo(url="https://cute-guys-lisyv9smx-cute-guys.vercel.app"))]
     ])
     await message.answer("✨ *BIENVENIDO A CUTE GUYS VIP* ✨\n\nElige tu acceso VIP aquí abajo:", reply_markup=keyboard, parse_mode="Markdown")
 
