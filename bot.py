@@ -6,7 +6,7 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo, LabeledPrice
 from aiogram import F
-
+from aiocryptopay import AioCryptoPay, Networks
 logging.basicConfig(level=logging.INFO)
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
@@ -17,7 +17,7 @@ SOPORTE_LINK = "https://telegram.me/CuteGuyspg"
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
-
+crypto = AioCryptoPay(token=CRYPTOBOT_TOKEN, network=Networks.MAIN_NET)
 VIP = {
 "prohibido": {"nombre": "Prohibido", "usd": 15, "stars": 800},
 "twinks": {"nombre": "Twinks", "usd": 15, "stars": 800},
@@ -95,14 +95,22 @@ async def handle_web_app_data(message: types.Message):
         
         metodo = data.get("metodo")
         plan_id = data.get("plan_id")
-        precio = data.get("precio")
+        precio = float(data.get("precio"))
         
-        await message.answer(f"✅ Recibí tu pago\nMétodo: {metodo}\nPlan: {plan_id}\nPrecio: ${precio} USD")
+        if metodo == "CryptoBot":
+            invoice = await crypto.create_invoice(
+                asset="USDT", 
+                amount=precio,
+                description=f"Plan {plan_id} - CuteGuys"
+            )
+            await message.answer(f"💎 Paga aquí con CryptoBot:\n{invoice.pay_url}")
         
+        elif metodo == "Paypal":
+            await message.answer(f"✅ Recibí Paypal\nPlan: {plan_id}\nPrecio: ${precio} USD")
+            
     except Exception as e:
-        print(f"Error al leer datos: {e}")
-        await message.answer("❌ Error procesando datos")
-        
+        print(f"Error: {e}")
+        await message.answer("❌ Error creando factura")
     except Exception as e:
         print(f"Error: {e}")
 async def main():
