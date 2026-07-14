@@ -1,136 +1,75 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CUTE GUYS VIP</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        body { background: #0a0a0a; color: #fff; font-family: Arial; margin: 0; padding: 15px; }
-        .title { text-align: center; font-size: 24px; font-weight: bold; background: linear-gradient(90deg, #FFD700, #FF00FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .free-groups { background: #1a1a1a; border: 2px solid #FFD700; border-radius: 12px; padding: 15px; margin: 15px 0; text-align: center; }
-        .free-groups a { color: #00FF88; text-decoration: none; font-weight: bold; display: block; margin: 5px 0; }
-        .section { margin: 20px 0; }
-        .section-title { color: #FFD700; font-size: 18px; font-weight: bold; margin-bottom: 10px; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .item { background: #1a1a1a; border: 1px solid #333; border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; transition: 0.2s; }
-        .item.selected { border: 2px solid #FF00FF; background: #2a0a2a; }
-        .item .price { color: #00FF88; font-weight: bold; }
-        .pay-btn { width: 100%; padding: 15px; margin: 8px 0; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
-        .paypal { background: #0070BA; color: white; }
-        .crypto { background: #0088cc; color: white; }
-        .stars { background: #FFD700; color: black; }
-        .stripe { background: #635BFF; color: white; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CUTE GUYS VIP</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+body { background: #0a0a0a; color: #fff; font-family: Arial; margin: 0; padding: 15px; }
+.title { text-align: center; font-size: 26px; font-weight: bold; background: linear-gradient(90deg, #FFD700, #FF00FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; }
+.free-groups { background: #1a1a1a; border: 2px solid #FFD700; border-radius: 12px; padding: 15px; margin: 15px 0; text-align: center; }
+.free-groups a { color: #00FF88; text-decoration: none; font-weight: bold; display: block; margin: 5px 0; font-size: 16px; }
+.section { margin: 20px 0; }
+.section-title { color: #FFD700; font-size: 18px; font-weight: bold; margin-bottom: 10px; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.item { background: #1a1a1a; border: 2px solid #333; border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; transition: 0.2s; }
+.item.selected { border: 2px solid #FF00FF; background: #2a0a2a; transform: scale(1.03); }
+.item .price { color: #00FF88; font-weight: bold; font-size: 14px; }
+.pay-btn { width: 100%; padding: 15px; margin: 8px 0; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
+.paypal { background: #0070BA; color: white; } .crypto { background: #0088cc; color: white; } .stars { background: #FFD700; color: black; } .stripe { background: #635BFF; color: white; }
+</style>
 </head>
 <body>
-    <div class="title">CUTE GUYS VIP 👑</div>
+<div class="title">CUTE GUYS VIP 👑</div>
 
-    <!-- GRUPOS GRATIS ARRIBA -->
-    <div class="free-groups">
-        <b>🎁 GRUPOS GRATIS</b>
-        <a href="https://telegram.me/+CET3NNTylb8xOTYx" target="_blank">GRUPO VIP GRATIS 1</a>
-        <a href="https://telegram.me/+Z2EbBhJGY8UwYjlh" target="_blank">GRUPO VIP GRATIS 2</a>
-    </div>
+<div class="free-groups">
+<b>🎁 GRUPOS GRATIS</b>
+<a href="https://telegram.me/+CET3NNTylb8xOTYx" target="_blank">GRUPO VIP GRATIS 1</a>
+<a href="https://telegram.me/+Z2EbBhJGY8UwYjlh" target="_blank">GRUPO VIP GRATIS 2</a>
+</div>
 
-    <!-- PAQUETES -->
-    <div class="section">
-        <div class="section-title">PAQUETES MENSUALES</div>
-        <div class="grid">
-            <div class="item" data-name="1 Mes" data-price="5"><b>1 Mes</b><div class="price">$5 / 500⭐</div></div>
-            <div class="item" data-name="2 Meses" data-price="9"><b>2 Meses</b><div class="price">$9 / 900⭐</div></div>
-            <div class="item" data-name="3 Meses" data-price="12"><b>3 Meses</b><div class="price">$12 / 1200⭐</div></div>
-            <div class="item" data-name="6 Meses" data-price="20"><b>6 Meses</b><div class="price">$20 / 2000⭐</div></div>
-        </div>
-    </div>
+<div class="section">
+<div class="section-title">PAQUETES MENSUALES</div>
+<div class="grid">
+<div class="item" data-id="1mes"><b>1 Mes</b><div class="price">$5 / 500⭐</div></div>
+<div class="item" data-id="2meses"><b>2 Meses</b><div class="price">$9 / 900⭐</div></div>
+<div class="item" data-id="3meses"><b>3 Meses</b><div class="price">$12 / 1200⭐</div></div>
+<div class="item" data-id="6meses"><b>6 Meses</b><div class="price">$20 / 2000⭐</div></div>
+</div>
+</div>
 
-    <!-- SUSCRIPCIONES -->
-    <div class="section">
-        <div class="section-title">SUSCRIPCIONES</div>
-        <div class="grid">
-            <div class="item" data-name="Anual" data-price="35"><b>Anual</b><div class="price">$35 / 3500⭐</div></div>
-            <div class="item" data-name="Permanente" data-price="60"><b>Permanente</b><div class="price">$60 / 6000⭐</div></div>
-        </div>
-    </div>
+<div class="section">
+<div class="section-title">SUSCRIPCIONES</div>
+<div class="grid">
+<div class="item" data-id="anual"><b>Anual</b><div class="price">$35 / 3500⭐</div></div>
+<div class="item" data-id="perma"><b>Permanente</b><div class="price">$60 / 6000⭐</div></div>
+</div>
+</div>
 
-    <!-- BOTONES DE PAGO -->
-    <button class="pay-btn paypal" onclick="pagar('Paypal')">Pagar con Paypal</button>
-    <button class="pay-btn crypto" onclick="pagar('CryptoBot')">Pagar con CryptoBot</button>
-    <button class="pay-btn stars" onclick="pagar('Stars')">Pagar con Stars</button>
-    <button class="pay-btn stripe" onclick="pagar('Stripe')">Pagar con Stripe</button>
+<button class="pay-btn paypal" onclick="pagar('Paypal')">Pagar con Paypal</button>
+<button class="pay-btn crypto" onclick="pagar('CryptoBot')">Pagar con CryptoBot</button>
+<button class="pay-btn stars" onclick="pagar('Stars')">Pagar con Stars</button>
+<button class="pay-btn stripe" onclick="pagar('Stripe')">Pagar con Stripe</button>
 
-    <script>
-        let selected = null;
-        const tg = window.Telegram.WebApp;
-        tg.expand();
+<script>
+let selected = null;
+const tg = window.Telegram.WebApp;
+tg.expand();
 
-        // Seleccionar item
-        document.querySelectorAll('.item').forEach(item => {
-            item.onclick = () => {
-                document.querySelectorAll('.item').forEach(i => i.classList.remove('selected'));
-                item.classList.add('selected');
-                selected = {name: item.dataset.name, price: item.dataset.price};
-            }
-        });
+document.querySelectorAll('.item').forEach(item => {
+item.onclick = () => {
+document.querySelectorAll('.item').forEach(i => i.classList.remove('selected'));
+item.classList.add('selected');
+selected = item.dataset.id;
+}
+});
 
-        // Boton de pago
-        function pagar(metodo) {
-            if(!selected) {
-                alert('Primero selecciona un plan rey 👑');
-                return;
-            }
-            tg.sendData(JSON.stringify({plan: selected.name, precio: selected.price, metodo: metodo}));
-            tg.close();
-        }
-    </script>
-</body>
-</html>
-    <h2>👑 SUSCRIPCIONES</h2>
-    <div class="grid">
-        <div class="card"><b>TWINKS ANUAL</b><div class="precio">$30 USD</div><button class="btn" onclick="pagar('twinks_anual')">COMPRAR</button></div>
-        <div class="card"><b>TWINKS PERMANENTE</b><div class="precio">$60 USD</div><button class="btn" onclick="pagar('twinks_perm')">COMPRAR</button></div>
-        <div class="card"><b>PROHIBIDO ANUAL</b><div class="precio">$40 USD</div><button class="btn" onclick="pagar('pro_anual')">COMPRAR</button></div>
-        <div class="card"><b>PROHIBIDO PERMANENTE</b><div class="precio">$80 USD</div><button class="btn" onclick="pagar('pro_perm')">COMPRAR</button></div>
-        <div class="card"><b>ADULTOS ANUAL</b><div class="precio">$15 USD</div><button class="btn" onclick="pagar('adult_anual')">COMPRAR</button></div>
-        <div class="card"><b>ADULTOS PERMANENTE</b><div class="precio">$30 USD</div><button class="btn" onclick="pagar('adult_perm')">COMPRAR</button></div>
-    </div>
-
-    <h2>🎁 GRUPOS GRATIS</h2>
-    <div class="grupo">𝘾𝙪𝙩𝙚 𝙂𝙪𝙮𝙨 🔥 <br><a href="https://t.me/+Z2EbBhJGY8UwYjlh">ENTRAR AQUÍ</a></div>
-    <div class="grupo">𝘾𝙪𝙩𝙚 𝙂𝙪𝙮𝙨 𝘾𝙝𝙖𝙣𝙚𝙡🔥 <br><a href="https://t.me/+CET3NNTylb8xOTYx">ENTRAR AQUÍ</a></div>
-
-    <h2>💳 MÉTODOS DE PAGO</h2>
-    <div class="grid">
-        <button class="btn" onclick="pago('paypal')">PAYPAL</button>
-        <button class="btn" onclick="pago('cryptobot')">CRYPTOBOT</button>
-        <button class="btn" onclick="pago('stars')">TELEGRAM STARS</button>
-        <button class="btn" onclick="pago('stripe')">TARJETA / STRIPE</button>
-    </div>
-
-    <script>
-        let tg = window.Telegram.WebApp; tg.expand();
-        let paquete_seleccionado = "";
-        function pagar(p) { paquete_seleccionado = p; alert("Paquete: " + p + ". Ahora elige método de pago abajo"); }
-        function pago(metodo) {
-            if(paquete_seleccionado == "") { alert("Primero elige un paquete arriba"); return; }
-            tg.sendData(JSON.stringify({paquete: paquete_seleccionado, metodo: metodo})); 
-            tg.close();
-        }
-    </script>
-</body>
-    </html>        <p>90 Días de acceso</p>
-        <p class="precio">$35 USDT</p>
-        <button onclick="comprar('vip')">COMPRAR AHORA</button>
-    </div>
-
-    <script>
-        let tg = window.Telegram.WebApp;
-        tg.expand();
-        
-        function comprar(paquete) {
-            tg.sendData(JSON.stringify({paquete: paquete}));
-            tg.close();
-        }
-    </script>
+function pagar(metodo) {
+if(!selected) { alert('Primero selecciona un plan rey 👑'); return; }
+tg.sendData(JSON.stringify({plan_id: selected, metodo: metodo}));
+tg.close();
+}
+</script>
 </body>
 </html>
