@@ -33,7 +33,7 @@ VIP = {
 @dp.message(Command("start"))
 async def start(message: types.Message):
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text="🔥 COMPRAR VIP", web_app=WebAppInfo(url="https://happydeath766-hue.github.io/cute-guys-bot/indexv2.html"))],
+    [InlineKeyboardButton(text="🔥 COMPRAR VIP", web_app=WebAppInfo(url="https://happydeath766-hue.github.io/cute-guys-bot/"))],
     [InlineKeyboardButton(text="💬 Soporte", url="https://t.me/CuteGuyspg")]
 ])
     await message.answer(
