@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cute Guys VIP</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body { background: #0f0f0f; color: white; font-family: Arial; padding: 20px; text-align: center; }
+        h1 { color: #ff4d6d; }
+        .card { background: #1a1a1a; border: 2px solid #ff4d6d; border-radius: 15px; padding: 20px; margin: 15px 0; }
+        .precio { font-size: 30px; color: #4dff88; font-weight: bold; }
+        button { background: #ff4d6d; color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; }
+        button:active { background: #ff1a4d; }
+    </style>
+</head>
+<body>
+    <h1>✨ CUTE GUYS VIP ✨</h1>
+    <p>Elige tu acceso</p>
+
+    <div class="card">
+        <h2>VIP Básico</h2>
+        <p>7 Días de acceso</p>
+        <p class="precio">$5 USDT</p>
+        <button onclick="comprar('basico')">COMPRAR AHORA</button>
+    </div>
+
+    <div class="card">
+        <h2>VIP Premium</h2>
+        <p>30 Días de acceso</p>
+        <p class="precio">$15 USDT</p>
+        <button onclick="comprar('premium')">COMPRAR AHORA</button>
+    </div>
+
+    <div class="card">
+        <h2>VIP ULTRA</h2>
+        <p>90 Días de acceso</p>
+        <p class="precio">$35 USDT</p>
+        <button onclick="comprar('vip')">COMPRAR AHORA</button>
+    </div>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand();
+        
+        function comprar(paquete) {
+            tg.sendData(JSON.stringify({paquete: paquete}));
+            tg.close();
+        }
+    </script>
+</body>
+</html>
