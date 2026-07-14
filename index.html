@@ -6,35 +6,85 @@
     <title>CUTE GUYS VIP</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { background: #0a0a0a; color: #f5f5f5; font-family: 'Georgia', serif; padding: 15px; border: 3px solid #d4af37; border-radius: 20px; }
-        h1 { text-align: center; color: #d4af37; font-size: 28px; text-shadow: 0 0 10px #d4af37; }
-        h2 { color: #d4af37; border-bottom: 2px solid #d4af37; padding-bottom: 5px; }
+        body { background: #0a0a0a; color: #fff; font-family: Arial; margin: 0; padding: 15px; }
+        .title { text-align: center; font-size: 24px; font-weight: bold; background: linear-gradient(90deg, #FFD700, #FF00FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .free-groups { background: #1a1a1a; border: 2px solid #FFD700; border-radius: 12px; padding: 15px; margin: 15px 0; text-align: center; }
+        .free-groups a { color: #00FF88; text-decoration: none; font-weight: bold; display: block; margin: 5px 0; }
+        .section { margin: 20px 0; }
+        .section-title { color: #FFD700; font-size: 18px; font-weight: bold; margin-bottom: 10px; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .card { background: #1a1a1a; border: 1px solid #d4af37; border-radius: 15px; padding: 12px; text-align: center; }
-        .precio { color: #4dff88; font-weight: bold; font-size: 16px; }
-        .stars { color: #ffd700; font-size: 14px; }
-        .btn { background: linear-gradient(90deg, #d4af37, #b8860b); color: #000; border: none; padding: 12px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 8px; }
-        .btn:hover { transform: scale(1.03); }
-        .grupo { background: #222; padding: 10px; border-radius: 10px; margin: 5px 0; }
-        a { color: #4dff88; text-decoration: none; }
+        .item { background: #1a1a1a; border: 1px solid #333; border-radius: 10px; padding: 12px; text-align: center; cursor: pointer; transition: 0.2s; }
+        .item.selected { border: 2px solid #FF00FF; background: #2a0a2a; }
+        .item .price { color: #00FF88; font-weight: bold; }
+        .pay-btn { width: 100%; padding: 15px; margin: 8px 0; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        .paypal { background: #0070BA; color: white; }
+        .crypto { background: #0088cc; color: white; }
+        .stars { background: #FFD700; color: black; }
+        .stripe { background: #635BFF; color: white; }
     </style>
 </head>
 <body>
-    <h1>✨ CUTE GUYS VIP STORE ✨</h1>
+    <div class="title">CUTE GUYS VIP 👑</div>
 
-    <h2>💎 PAQUETES MENSUALES</h2>
-    <div class="grid">
-        <div class="card"><b>PROHIBIDO</b><div class="precio">$15 USD</div><div class="stars">800 ⭐</div><button class="btn" onclick="pagar('prohibido')">COMPRAR</button></div>
-        <div class="card"><b>TWINKS</b><div class="precio">$15 USD</div><div class="stars">800 ⭐</div><button class="btn" onclick="pagar('twinks')">COMPRAR</button></div>
-        <div class="card"><b>ADULTOS</b><div class="precio">$10 USD</div><div class="stars">500 ⭐</div><button class="btn" onclick="pagar('adultos')">COMPRAR</button></div>
-        <div class="card"><b>PERSONALIZADO</b><div class="precio">$70 USD</div><div class="stars">3,500 ⭐</div><button class="btn" onclick="pagar('personalizado')">COMPRAR</button></div>
-        <div class="card"><b>TWINKS + PROHIBIDO</b><div class="precio">$27 USD</div><div class="stars">1,600 ⭐</div><button class="btn" onclick="pagar('combo1')">COMPRAR</button></div>
-        <div class="card"><b>TWINKS + ADULTOS</b><div class="precio">$17 USD</div><div class="stars">1,100 ⭐</div><button class="btn" onclick="pagar('combo2')">COMPRAR</button></div>
-        <div class="card"><b>PROHIBIDO + ADULTOS</b><div class="precio">$15 USD</div><div class="stars">1,100 ⭐</div><button class="btn" onclick="pagar('combo3')">COMPRAR</button></div>
-        <div class="card"><b>PERSONALIZADO + OTRO</b><div class="precio">$80 USD</div><div class="stars">3,800 ⭐</div><button class="btn" onclick="pagar('combo4')">COMPRAR</button></div>
-        <div class="card" style="grid-column: span 2;"><b>🔥 TODOS</b><div class="precio">$100 USD</div><div class="stars">4,800 ⭐</div><button class="btn" onclick="pagar('todos')">COMPRAR TODO</button></div>
+    <!-- GRUPOS GRATIS ARRIBA -->
+    <div class="free-groups">
+        <b>🎁 GRUPOS GRATIS</b>
+        <a href="https://t.me/+TU_LINK_GRUPO1" target="_blank">GRUPO VIP GRATIS 1</a>
+        <a href="https://t.me/+TU_LINK_GRUPO2" target="_blank">GRUPO VIP GRATIS 2</a>
     </div>
 
+    <!-- PAQUETES -->
+    <div class="section">
+        <div class="section-title">PAQUETES MENSUALES</div>
+        <div class="grid">
+            <div class="item" data-name="1 Mes" data-price="5"><b>1 Mes</b><div class="price">$5 / 500⭐</div></div>
+            <div class="item" data-name="2 Meses" data-price="9"><b>2 Meses</b><div class="price">$9 / 900⭐</div></div>
+            <div class="item" data-name="3 Meses" data-price="12"><b>3 Meses</b><div class="price">$12 / 1200⭐</div></div>
+            <div class="item" data-name="6 Meses" data-price="20"><b>6 Meses</b><div class="price">$20 / 2000⭐</div></div>
+        </div>
+    </div>
+
+    <!-- SUSCRIPCIONES -->
+    <div class="section">
+        <div class="section-title">SUSCRIPCIONES</div>
+        <div class="grid">
+            <div class="item" data-name="Anual" data-price="35"><b>Anual</b><div class="price">$35 / 3500⭐</div></div>
+            <div class="item" data-name="Permanente" data-price="60"><b>Permanente</b><div class="price">$60 / 6000⭐</div></div>
+        </div>
+    </div>
+
+    <!-- BOTONES DE PAGO -->
+    <button class="pay-btn paypal" onclick="pagar('Paypal')">Pagar con Paypal</button>
+    <button class="pay-btn crypto" onclick="pagar('CryptoBot')">Pagar con CryptoBot</button>
+    <button class="pay-btn stars" onclick="pagar('Stars')">Pagar con Stars</button>
+    <button class="pay-btn stripe" onclick="pagar('Stripe')">Pagar con Stripe</button>
+
+    <script>
+        let selected = null;
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        // Seleccionar item
+        document.querySelectorAll('.item').forEach(item => {
+            item.onclick = () => {
+                document.querySelectorAll('.item').forEach(i => i.classList.remove('selected'));
+                item.classList.add('selected');
+                selected = {name: item.dataset.name, price: item.dataset.price};
+            }
+        });
+
+        // Boton de pago
+        function pagar(metodo) {
+            if(!selected) {
+                alert('Primero selecciona un plan rey 👑');
+                return;
+            }
+            tg.sendData(JSON.stringify({plan: selected.name, precio: selected.price, metodo: metodo}));
+            tg.close();
+        }
+    </script>
+</body>
+</html>
     <h2>👑 SUSCRIPCIONES</h2>
     <div class="grid">
         <div class="card"><b>TWINKS ANUAL</b><div class="precio">$30 USD</div><button class="btn" onclick="pagar('twinks_anual')">COMPRAR</button></div>
