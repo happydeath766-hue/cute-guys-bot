@@ -260,6 +260,7 @@ function pagar(metodo) {
 
     console.log("Enviando:", data); // para debug
 
+    alert("Enviando: " + JSON.stringify(data));
     tg.sendData(JSON.stringify(data));
 
     setTimeout(() => {
