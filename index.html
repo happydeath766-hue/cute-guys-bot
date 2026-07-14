@@ -248,11 +248,23 @@ function girarRuleta() {
 function pagar(metodo) {
     let v = VIP[vipSel];
     let t = calcularTotal();
-    tg.sendData(JSON.stringify({
-        plan_id: vipSel, dias: durSel.dias, total_usd: t.totalUsd, total_stars: t.totalStars,
-        descuento: descuento, metodo: metodo
-    }));
-    tg.close();
+
+    const data = {
+        plan_id: vipSel,
+        dias: durSel.dias,
+        total_usd: t.totalUsd,
+        total_stars: t.totalStars,
+        descuento: descuento,
+        metodo: metodo
+    };
+
+    console.log("Enviando:", data); // para debug
+
+    tg.sendData(JSON.stringify(data));
+
+    setTimeout(() => {
+        tg.close(); // dale 200ms para que envíe antes de cerrar
+    }, 200);
 }
 
 window.onload = renderVips;
