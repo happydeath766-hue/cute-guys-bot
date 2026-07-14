@@ -85,7 +85,6 @@ async def webapp_data(message: types.Message):
     except Exception as e:
         logging.error(f"Error: {e}")
         await message.answer("❌ Hubo un error procesando tu pago. Habla con soporte.")
-import json
 
 @dp.message(F.web_app_data)
 async def handle_web_app_data(message: types.Message):
