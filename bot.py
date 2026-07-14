@@ -85,7 +85,24 @@ async def webapp_data(message: types.Message):
     except Exception as e:
         logging.error(f"Error: {e}")
         await message.answer("❌ Hubo un error procesando tu pago. Habla con soporte.")
+import json
 
+@dp.message_handler(content_types=types.ContentType.WEB_APP_DATA)
+async def handle_web_app_data(message: types.Message):
+    try:
+        data = json.loads(message.web_app_data.data)
+        print(f"📦 DATOS RECIBIDOS: {data}")
+        
+        metodo = data.get("metodo")
+        plan_id = data.get("plan_id")
+        precio = data.get("precio")
+        
+        await message.answer(f"✅ Recibí tu pago con: {metodo}\nPlan: {plan_id}\nPrecio: ${precio} USD")
+        
+        # AQUÍ YA PUEDES PROCESAR PAYPAL/CRYPTO
+        
+    except Exception as e:
+        print(f"Error: {e}")
 async def main():
     print("Bot iniciado...")
     await dp.start_polling(bot)
